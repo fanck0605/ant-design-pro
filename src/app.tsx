@@ -17,6 +17,12 @@ export const initialStateConfig = {
   loading: <PageLoading />,
 };
 
+function isLoginPage() {
+  const { pathname } = history.location;
+  // 
+  return pathname && pathname.startsWith(loginPath);
+}
+
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
@@ -36,7 +42,7 @@ export async function getInitialState(): Promise<{
     return undefined;
   };
   // 如果不是登录页面，执行
-  if (history.location.pathname !== loginPath) {
+  if (!isLoginPage()) {
     const currentUser = await fetchUserInfo();
     return {
       fetchUserInfo,
